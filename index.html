@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>断食タイマー</title>
+    <link rel="stylesheet" href="../css/main.css">
+</head>
+<body>
+    <div class="fasting-header">
+        <h2>断食タイマー</h2>
+    </div>
+
+    <!-- 断食時間の選択 -->
+    <div class="time-select">
+        <label for="fasting-time">断食時間を選択してください:</label>
+        <select id="fasting-time">
+            <option value="1">1時間</option>
+            <option value="12">12時間</option>
+            <option value="14">14時間</option>
+            <option value="16" selected>16時間</option>
+            <option value="24">24時間</option>
+        </select>
+    </div>
+
+    <!-- プログレスバー表示 -->
+    <div class="progress-bar-container">
+        <progress id="timer-progress" value="0" max="100"></progress>
+        <span id="elapsed-time">00:00:00</span>
+    </div>
+
+    <!-- 開始時間と終了時間表示 -->
+    <div class="time-info">
+        <p>開始時間: <span id="start-time">--:--</span></p>
+        <p>終了予定時間: <span id="end-time">--:--</span></p>
+    </div>
+
+    <!-- ボタンエリア -->
+    <div class="button-area">
+        <button id="start-fasting">断食をスタート</button>
+        <button id="reset-timer">リセット</button>
+    </div>
+
+    <script src="../js/app.js" type="module"></script>
+</body>
+</html>
