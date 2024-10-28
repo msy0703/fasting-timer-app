@@ -66,6 +66,10 @@ function startFasting(selectedStartTime) {
     const endTime = new Date(startTime.getTime() + totalFastingSeconds * 1000); 
     endTimeDisplay.textContent = endTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
+    // 開始時間と断食時間をローカルストレージに保存
+    localStorage.setItem('fastingStartTime', startTime.getTime()); // ミリ秒で保存
+    localStorage.setItem('fastingDuration', fastingHours); // 断食時間（時間単位）
+
     timer = setInterval(() => {
         let currentTime = new Date();
         let elapsedSeconds = Math.floor((currentTime - startTime) / 1000);
@@ -74,6 +78,8 @@ function startFasting(selectedStartTime) {
             clearInterval(timer);
             saveFastingHistory(startTime, endTime); // 履歴を保存
             loadFastingHistory(); // 履歴を表示
+            localStorage.removeItem('fastingStartTime'); // タイマー終了後、ローカルストレージから削除
+            localStorage.removeItem('fastingDuration');
         }
 
         updateElapsedTime(elapsedSeconds);
@@ -92,6 +98,10 @@ function stopFasting() {
     saveFastingHistory(startTime, endTime); // 履歴を保存
     loadFastingHistory(); // 履歴を表示
     resetTimer(); // タイマーと表示をリセット
+
+    // ローカルストレージからタイマー情報を削除
+    localStorage.removeItem('fastingStartTime');
+    localStorage.removeItem('fastingDuration');
 
     isFasting = false; // 断食が停止されたことを示すフラグを設定
     fastingButton.textContent = "断食をスタート";
@@ -177,8 +187,34 @@ function loadFastingHistory() {
 
 // ページ読み込み時に履歴を表示
 window.onload = function() {
-    loadFastingHistory();
+    // ローカルストレージにデータがあるか確認
+    const savedStartTime = localStorage.getItem('fastingStartTime');
+    const savedDuration = localStorage.getItem('fastingDuration');
+
+    if (savedStartTime && savedDuration) {
+        const startTime = new Date(parseInt(savedStartTime));
+        const fastingHours = parseInt(savedDuration);
+        const totalFastingSeconds = fastingHours * 3600;
+        const currentTime = new Date();
+        const elapsedSeconds = Math.floor((currentTime - startTime) / 1000);
+
+        // 経過時間が断食時間を超えていないか確認
+        if (elapsedSeconds < totalFastingSeconds) {
+            startFasting(startTime); // タイマーを再開
+            updateElapsedTime(elapsedSeconds);
+            updateProgressBar(elapsedSeconds, totalFastingSeconds);
+        } else {
+            // 既に断食時間を過ぎている場合、タイマーを停止
+            saveFastingHistory(startTime, new Date(startTime.getTime() + totalFastingSeconds * 1000));
+            loadFastingHistory();
+            localStorage.removeItem('fastingStartTime'); // ローカルストレージから削除
+            localStorage.removeItem('fastingDuration');
+        }
+    } else {
+        loadFastingHistory(); // ローカルストレージに何もなければ履歴のみ読み込む
+    }
 };
+
 
 // 履歴削除ボタンの処理を追加
 document.getElementById('clear-history').addEventListener('click', function() {
