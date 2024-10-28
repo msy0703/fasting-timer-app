@@ -133,27 +133,6 @@ progress::-webkit-progress-value {
     padding: 0 10px;
 }
 
-.modal {
-    display: none; /* 初期状態では表示しない */
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.4); /* 半透明の背景 */
-}
-
-.modal-content {
-    background-color: #fefefe;
-    margin: 15% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 300px; /* モーダルの幅 */
-    text-align: center;
-}
-
 /* モーダルのスタイル */
 .modal {
     display: none;
@@ -163,20 +142,30 @@ progress::-webkit-progress-value {
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.4); /* 背景を半透明に */
+    overflow: hidden; /* モバイルでのスクロールを防ぐ */
 }
 
 .modal-content {
     background-color: #fff;
-    margin: 15% auto;
+    margin: 20% auto; /* モバイルでも中央に表示されるように調整 */
     padding: 20px;
-    border-radius: 10px; /* モーダルの角を丸くする */
-    width: 300px;
+    border-radius: 10px;
+    width: 90%; /* モバイル用に幅を調整 */
+    max-width: 400px; /* モバイルとデスクトップの両方で適切な幅を設定 */
     text-align: center;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-/* ボタンの共通スタイル */
+/* モーダルのスクロールに対応 */
+@media (max-height: 600px) {
+    .modal-content {
+        margin-top: 10%; /* 小さな画面での上部マージンを調整 */
+        padding: 10px;
+    }
+}
+
+/* ボタンのスタイル（共通） */
 .modal-button, .modal-cancel-button {
     display: inline-block;
     padding: 10px 20px;
@@ -186,6 +175,7 @@ progress::-webkit-progress-value {
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    width: 100%; /* モバイルでボタンが画面幅いっぱいになるように調整 */
 }
 
 /* ボタンのホバー時のスタイル */
@@ -195,7 +185,7 @@ progress::-webkit-progress-value {
 
 /* 開始ボタンのスタイル */
 .modal-button {
-    background-color: #28a745; /* 緑色 */
+    background-color: #28a745;
     color: white;
 }
 
@@ -205,10 +195,11 @@ progress::-webkit-progress-value {
 
 /* キャンセルボタンのスタイル */
 .modal-cancel-button {
-    background-color: #dc3545; /* 赤色 */
+    background-color: #dc3545;
     color: white;
 }
 
 .modal-cancel-button:hover {
     background-color: #c82333;
 }
+
