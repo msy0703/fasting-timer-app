@@ -126,3 +126,89 @@ progress::-webkit-progress-value {
     background-color: #999;
     color: white;
 }
+
+#calendar {
+    width: 55%; /* カレンダーの幅をプログレスバーに合わせて40%に設定 */
+    margin: 20px auto;
+    padding: 0 10px;
+}
+
+.modal {
+    display: none; /* 初期状態では表示しない */
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4); /* 半透明の背景 */
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 300px; /* モーダルの幅 */
+    text-align: center;
+}
+
+/* モーダルのスタイル */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 15% auto;
+    padding: 20px;
+    border-radius: 10px; /* モーダルの角を丸くする */
+    width: 300px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* ボタンの共通スタイル */
+.modal-button, .modal-cancel-button {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 10px 0;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* ボタンのホバー時のスタイル */
+.modal-button:hover, .modal-cancel-button:hover {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* 開始ボタンのスタイル */
+.modal-button {
+    background-color: #28a745; /* 緑色 */
+    color: white;
+}
+
+.modal-button:hover {
+    background-color: #218838;
+}
+
+/* キャンセルボタンのスタイル */
+.modal-cancel-button {
+    background-color: #dc3545; /* 赤色 */
+    color: white;
+}
+
+.modal-cancel-button:hover {
+    background-color: #c82333;
+}

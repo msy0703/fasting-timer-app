@@ -4,9 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>断食タイマー</title>
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <!-- FullCalendar CSS -->
+    <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.css' rel='stylesheet' />
+    <!-- FullCalendar JS -->
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.js'></script>
     <link rel="stylesheet" href="css/main.css">
 </head>
+
 <body>
     <div class="fasting-header">
         <h2>断食タイマー</h2>
@@ -16,7 +20,6 @@
     <div class="time-select">
         <label for="fasting-time">断食時間を選択してください:</label>
         <select id="fasting-time">
-            <option value="1">1時間</option>
             <option value="12">12時間</option>
             <option value="14">14時間</option>
             <option value="16" selected>16時間</option>
@@ -42,6 +45,32 @@
         <button id="reset-timer">リセット</button>
     </div>
 
+<!-- モーダル（開始オプション選択用） -->
+<div id="start-modal" class="modal">
+    <div class="modal-content">
+        <h3>断食を開始しますか？</h3>
+        <button id="start-now" class="modal-button">現在の時刻で開始</button>
+        <br>
+        <label for="start-time-picker">開始時間を指定:</label>
+        <input type="datetime-local" id="start-time-picker">
+        <br>
+        <button id="start-with-time" class="modal-button">指定した時間で開始</button>
+        <br>
+        <button id="cancel-modal" class="modal-cancel-button">キャンセル</button> <!-- キャンセルボタンを追加 -->
+    </div>
+</div>
+
+
+    <!-- カレンダー表示エリア -->
+    <div id='calendar'></div> <!-- カレンダーがここに表示される -->
+
+    <!-- 履歴表示エリア -->>
+    <div class="history-section">
+        <h3>断食履歴</h3>
+        <ul id="fasting-history-list"></ul> <!-- 履歴が表示されるリスト -->
+        <button id="clear-history">全履歴削除</button> <!-- 履歴削除ボタン -->
+    </div>
+    
     <script src="js/app.js" type="module"></script>
 </body>
 </html>
