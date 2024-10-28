@@ -131,6 +131,7 @@ progress::-webkit-progress-value {
     width: 80%; /* カレンダーの幅をプログレスバーに合わせて40%に設定 */
     margin: 20px auto;
     padding: 0 10px;
+    overflow-y: auto; /* 高さを超える場合はスクロール */
 }
 
 /* モーダルのスタイル */
