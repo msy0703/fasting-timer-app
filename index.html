@@ -30,7 +30,9 @@
     <!-- プログレスバー表示 -->
     <div class="progress-bar-container">
         <progress id="timer-progress" value="0" max="100"></progress>
-        <span id="elapsed-time">00:00:00</span>
+        <div id="remaining-time">--:--:--</div> <!-- 残り時間を表示する要素 -->
+        <span id="elapsed-time">00:00:00</span> <!-- 経過時間を表示する要素 -->
+        <div id="autophagy-text" style="display: none;">オートファジー中🔥</div> <!-- 12時間後に表示するテキスト -->
     </div>
 
     <!-- 開始時間と終了時間表示 -->

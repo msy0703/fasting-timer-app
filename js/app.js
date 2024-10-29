@@ -11,6 +11,8 @@ let modal = document.getElementById('start-modal');
 let startNowButton = document.getElementById('start-now');
 let startWithTimeButton = document.getElementById('start-with-time');
 let startTimePicker = document.getElementById('start-time-picker');
+let remainingTimeDisplay = document.getElementById('remaining-time'); // 残り時間を表示する要素を取得
+
 
 let isFasting = false; // 断食の状態を保持
 
@@ -59,34 +61,42 @@ startWithTimeButton.addEventListener('click', function() {
 
 // 断食開始
 function startFasting(selectedStartTime) {
-    startTime = selectedStartTime; // グローバル変数に設定
+    startTime = selectedStartTime;
     startTimeDisplay.textContent = startTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    
     const fastingHours = parseInt(fastingTimeSelect.value);
     const totalFastingSeconds = fastingHours * 3600;
+
+    // 終了予定時間を計算
     const endTime = new Date(startTime.getTime() + totalFastingSeconds * 1000); 
     endTimeDisplay.textContent = endTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-
-    // 開始時間と断食時間をローカルストレージに保存
-    localStorage.setItem('fastingStartTime', startTime.getTime()); // ミリ秒で保存
-    localStorage.setItem('fastingDuration', fastingHours); // 断食時間（時間単位）
 
     timer = setInterval(() => {
         let currentTime = new Date();
         let elapsedSeconds = Math.floor((currentTime - startTime) / 1000);
+        let remainingSeconds = totalFastingSeconds - elapsedSeconds;
 
-        if (elapsedSeconds >= totalFastingSeconds) {
-            clearInterval(timer);
-            saveFastingHistory(startTime, endTime); // 履歴を保存
-            loadFastingHistory(); // 履歴を表示
-            localStorage.removeItem('fastingStartTime'); // タイマー終了後、ローカルストレージから削除
-            localStorage.removeItem('fastingDuration');
+        // 経過時間を表示
+        updateElapsedTime(elapsedSeconds);
+
+        // 12時間（43200秒）を経過したらプログレスバーの色とテキストを変更
+        if (elapsedSeconds >= 43200) { // 12時間以上経過した場合
+            document.getElementById('timer-progress').classList.add('autophagy-mode');
+            document.getElementById('autophagy-text').style.display = 'block'; // テキストを表示
         }
 
-        updateElapsedTime(elapsedSeconds);
+        // 残り時間を表示
+        if (remainingSeconds > 0) {
+            updateRemainingTime(remainingSeconds);
+        } else {
+            let overtimeSeconds = Math.abs(remainingSeconds);
+            updateRemainingTime(-overtimeSeconds);
+        }
+
         updateProgressBar(elapsedSeconds, totalFastingSeconds);
     }, 1000);
 
-    isFasting = true; // 断食が開始されたことを示すフラグを設定
+    isFasting = true;
     fastingButton.textContent = "断食を停止";
     fastingButton.classList.add('stop');
 }
@@ -106,6 +116,9 @@ function stopFasting() {
     isFasting = false; // 断食が停止されたことを示すフラグを設定
     fastingButton.textContent = "断食をスタート";
     fastingButton.classList.remove('stop');
+
+    // ページをリロード
+    location.reload(); // ページをリロードする
 }
 
 // タイマーリセット
@@ -122,14 +135,34 @@ export function calculateEndTime(fastingHours) {
     return endTime;
 }
 
+// 残り時間をプログレスバーの上に表示する関数
+function updateRemainingTime(remainingSeconds) {
+    let displayText;
+    if (remainingSeconds >= 0) {
+        let hours = Math.floor(remainingSeconds / 3600);
+        let minutes = Math.floor((remainingSeconds % 3600) / 60);
+        let seconds = remainingSeconds % 60;
+        displayText = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+    } else {
+        // 超過時間を表示
+        let overtimeSeconds = Math.abs(remainingSeconds);
+        let hours = Math.floor(overtimeSeconds / 3600);
+        let minutes = Math.floor((overtimeSeconds % 3600) / 60);
+        let seconds = overtimeSeconds % 60;
+        displayText = `+${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+    }
+
+    remainingTimeDisplay.textContent = displayText; // 残り時間を表示
+}
+
 // 経過時間の表示を更新
-function updateElapsedTime(seconds) {
-    let hours = Math.floor(seconds / 3600);
-    let minutes = Math.floor((seconds % 3600) / 60);
-    let remainingSeconds = seconds % 60;
+function updateElapsedTime(elapsedSeconds) {
+    let hours = Math.floor(elapsedSeconds / 3600);
+    let minutes = Math.floor((elapsedSeconds % 3600) / 60);
+    let remainingSeconds = elapsedSeconds % 60;
 
     elapsedTimeDisplay.textContent = 
-        `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(remainingSeconds).padStart(2, '0')}`;
+        `経過時間: ${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(remainingSeconds).padStart(2, '0')}`;
 }
 
 // プログレスバーを更新
@@ -229,8 +262,9 @@ document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar');
 
     var calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: 'dayGridMonth', // 月表示
-        events: loadCalendarEvents() // 履歴をカレンダーに読み込む
+        initialView: 'dayGridMonth',
+        height: 'auto', // カレンダーの高さを自動調整
+        events: loadCalendarEvents() // イベントを読み込み
     });
 
     calendar.render();

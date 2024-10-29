@@ -60,8 +60,11 @@ body {
     position: relative;
     width: 40%; /* プログレスバーの幅を40%に */
     margin: 20px auto;
+    margin-top: 40px; /* 上の要素との間隔を調整 */
+    margin-bottom: 20px; /* 下の要素との間隔を確保 */
 }
 
+/* プログレスバー全体 */
 progress {
     width: 100%;
     height: 30px;
@@ -69,34 +72,86 @@ progress {
     appearance: none;
     border-radius: 15px;
     overflow: hidden;
-    background-color: rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(10px);
+    background-color: rgba(211, 211, 211, 0.6); /* 薄いグレー */
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
     border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
+/* Webkitベースのブラウザ用（Chrome, Safariなど） */
 progress::-webkit-progress-bar {
-    background: rgba(255, 255, 255, 0.3);
-    backdrop-filter: blur(5px);
+    background-color: rgba(211, 211, 211, 0.6); /* 薄いグレー */
     border-radius: 15px;
 }
 
+/* Webkitでの進行した部分 */
 progress::-webkit-progress-value {
-    background: linear-gradient(to right, rgba(255, 165, 0, 0.8), rgba(255, 69, 0, 0.8));
-    box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.5);
+    background: linear-gradient(to right, rgba(255, 165, 0, 0.8), rgba(255, 69, 0, 0.8)); /* 進行した部分の色 */
     border-radius: 15px;
+}
+
+/* Firefox用 */
+progress::-moz-progress-bar {
+    background: linear-gradient(to right, rgba(255, 165, 0, 0.8), rgba(255, 69, 0, 0.8)); /* 進行した部分の色 */
+    border-radius: 15px;
+}
+
+/* 進行していない部分（グレー） */
+progress {
+    background-color: rgba(211, 211, 211, 0.6); /* 薄いグレー */
+}
+
+/* プログレスバー */
+#timer-progress {
+    width: 100%; /* プログレスバーの幅 */
+    height: 20px; /* プログレスバーの高さ */
+    position: relative; /* 残り時間を重ねるためにrelativeを設定 */
+    margin-bottom: 5px; /* 経過時間との間の余白 */
+}
+
+/* プログレスバーの12時間経過後のスタイル */
+#timer-progress.autophagy-mode::-webkit-progress-value {
+    background: red; /* 赤色 */
+}
+
+#timer-progress.autophagy-mode::-moz-progress-bar {
+    background: red; /* 赤色 */
+}
+
+/* 残り時間をプログレスバーの上に重ねて表示 */
+#remaining-time {
+    position: absolute;
+    top: 25%; /* プログレスバー内の位置を調整 */
+    left: 50%; /* 水平方向に中央揃え */
+    transform: translate(-50%, -50%); /* 完全に中央に配置 */
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    z-index: 1; /* プログレスバーの上に表示 */
 }
 
 /* プログレスバー上に経過時間を表示 */
 #elapsed-time {
+    font-size: 12px; /* 経過時間を少し小さく表示 */
+    color: #555;     /* 経過時間の色をやや薄く */
+    text-align: center; /* 中央揃え */
+    margin-top: 5px; /* プログレスバーとの間に少し余白を追加 */
+    text-shadow: 
+    -1px -1px 0 #fff,  
+    1px -1px 0 #fff,
+    -1px 1px 0 #fff,
+    1px 1px 0 #fff; /* 白色の輪郭を追加 */
+}
+
+/* オートファジー中のテキストスタイル */
+#autophagy-text {
     position: absolute;
-    top: 50%;
+    top: -40px; /* プログレスバーの上に配置する距離を広げる */
     left: 50%;
-    transform: translate(-50%, -50%);
-    color: #000;
+    transform: translateX(-50%);
     font-size: 18px;
     font-weight: bold;
-    z-index: 1;
+    color: rgba(255, 69, 0, 0.8); /* 濃い赤色と同じ色 */
+    z-index: 2; /* 他の要素よりも上に表示されるようにする */
 }
 
 .time-info {
@@ -132,6 +187,41 @@ progress::-webkit-progress-value {
     margin: 20px auto;
     padding: 0 10px;
     overflow-y: auto; /* 高さを超える場合はスクロール */
+}
+
+/* デフォルト（大きな画面向け） */
+.fc-button {
+    padding: 10px 15px;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+/* 画面幅が768px以下の場合（タブレットサイズ） */
+@media (max-width: 768px) {
+    .fc-button {
+        padding: 8px 12px;  /* ボタンの余白を小さく */
+        font-size: 14px;    /* フォントサイズを小さく */
+    }
+}
+
+/* 画面幅が480px以下の場合（スマートフォンサイズ） */
+@media (max-width: 480px) {
+    .fc-button {
+        padding: 6px 10px;  /* さらに余白を小さく */
+        font-size: 12px;    /* フォントサイズを小さく */
+    }
+}
+
+/* ボタンのホバースタイル */
+.fc-button:hover {
+    background-color: #007bff; /* ホバー時の背景色を変更 */
+    color: white;              /* テキストの色を白に変更 */
+}
+
+/* ボタンがアクティブ（クリック中）のスタイル */
+.fc-button:active {
+    background-color: #0056b3; /* アクティブ時の背景色を変更 */
+    transform: scale(0.98);    /* ボタンをクリックしたときに少し縮む効果 */
 }
 
 /* モーダルのスタイル */
@@ -193,6 +283,7 @@ body.modal-open {
 }
 
 .modal-button:hover {
+    transform: scale(1.05); /* ホバー時に少し大きく */
     background-color: #218838;
 }
 
