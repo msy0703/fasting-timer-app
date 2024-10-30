@@ -1,0 +1,27 @@
+/* animations.css - アニメーションスタイル */
+
+/* 点滅アニメーション */
+@keyframes blink {
+    0% {
+        opacity: 1; /* 完全に表示 */
+    }
+    50% {
+        opacity: 0; /* 消える */
+    }
+    100% {
+        opacity: 1; /* 再び表示 */
+    }
+}
+
+/* オートファジー中のテキストの点滅アニメーション */
+#autophagy-text {
+    position: absolute;
+    top: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 18px;
+    font-weight: bold;
+    color: rgba(255, 69, 0, 0.8);
+    z-index: 2;
+    animation: blink 1s infinite; /* 1秒間隔で点滅 */
+}

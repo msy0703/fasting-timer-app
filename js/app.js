@@ -260,6 +260,9 @@ document.getElementById('clear-history').addEventListener('click', function() {
     
     // 履歴リストをクリア
     loadFastingHistory();
+
+    // ページをリロード
+    location.reload(); // ページをリロードする
 });
 
 document.addEventListener('DOMContentLoaded', function() {

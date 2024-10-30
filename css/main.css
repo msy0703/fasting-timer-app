@@ -142,32 +142,6 @@ progress {
     margin-top: 5px; /* プログレスバーとの間に少し余白を追加 */
 }
 
-/* オートファジー中のテキストスタイル */
-#autophagy-text {
-    position: absolute;
-    top: -40px; /* プログレスバーの上に配置する距離を広げる */
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 18px;
-    font-weight: bold;
-    color: rgba(255, 69, 0, 0.8); /* 濃い赤色 */
-    z-index: 2; /* 他の要素よりも上に表示されるようにする */
-    animation: blink 1s infinite; /* 1秒間隔で無限に点滅 */
-}
-
-/* 点滅アニメーション */
-@keyframes blink {
-    0% {
-        opacity: 1; /* 完全に表示 */
-    }
-    50% {
-        opacity: 0; /* 消える */
-    }
-    100% {
-        opacity: 1; /* 再び表示 */
-    }
-}
-
 .time-info {
     margin: 10px 0;
 }
@@ -228,6 +202,9 @@ progress {
         font-size: 14px; /* フォントサイズを小さくする */
         top: -30px; /* テキストの位置を調整 */
         white-space: nowrap; /* 改行を防ぐ */
+    }
+    #calendar {
+        font-size: 12px;
     }
 }
 
