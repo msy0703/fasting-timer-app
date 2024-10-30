@@ -71,6 +71,10 @@ function startFasting(selectedStartTime) {
     const endTime = new Date(startTime.getTime() + totalFastingSeconds * 1000); 
     endTimeDisplay.textContent = endTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
+    // 開始時間と断食時間をローカルストレージに保存
+    localStorage.setItem('fastingStartTime', startTime.getTime()); // ミリ秒で保存
+    localStorage.setItem('fastingDuration', fastingHours); // 断食時間（時間単位）
+
     timer = setInterval(() => {
         let currentTime = new Date();
         let elapsedSeconds = Math.floor((currentTime - startTime) / 1000);

@@ -110,11 +110,11 @@ progress {
 
 /* プログレスバーの12時間経過後のスタイル */
 #timer-progress.autophagy-mode::-webkit-progress-value {
-    background: red; /* 赤色 */
+    background: rgb(255, 98, 0); /* 赤色 */
 }
 
 #timer-progress.autophagy-mode::-moz-progress-bar {
-    background: red; /* 赤色 */
+    background: rgb(255, 98, 0); /* 赤色 */
 }
 
 /* 残り時間をプログレスバーの上に重ねて表示 */
@@ -125,8 +125,13 @@ progress {
     transform: translate(-50%, -50%); /* 完全に中央に配置 */
     font-size: 18px;
     font-weight: bold;
-    color: #333;
+    color: #555;
     z-index: 1; /* プログレスバーの上に表示 */
+    text-shadow: 
+        -1px -1px 1px #fff ,  
+        1px -1px 1px #fff,
+        -1px 1px 1px #fff,
+        1px 1px 1px #fff; /* 白色の強い輪郭を追加 */
 }
 
 /* プログレスバー上に経過時間を表示 */
@@ -135,11 +140,6 @@ progress {
     color: #555;     /* 経過時間の色をやや薄く */
     text-align: center; /* 中央揃え */
     margin-top: 5px; /* プログレスバーとの間に少し余白を追加 */
-    text-shadow: 
-    -1px -1px 0 #fff,  
-    1px -1px 0 #fff,
-    -1px 1px 0 #fff,
-    1px 1px 0 #fff; /* 白色の輪郭を追加 */
 }
 
 /* オートファジー中のテキストスタイル */
@@ -150,8 +150,22 @@ progress {
     transform: translateX(-50%);
     font-size: 18px;
     font-weight: bold;
-    color: rgba(255, 69, 0, 0.8); /* 濃い赤色と同じ色 */
+    color: rgba(255, 69, 0, 0.8); /* 濃い赤色 */
     z-index: 2; /* 他の要素よりも上に表示されるようにする */
+    animation: blink 1s infinite; /* 1秒間隔で無限に点滅 */
+}
+
+/* 点滅アニメーション */
+@keyframes blink {
+    0% {
+        opacity: 1; /* 完全に表示 */
+    }
+    50% {
+        opacity: 0; /* 消える */
+    }
+    100% {
+        opacity: 1; /* 再び表示 */
+    }
 }
 
 .time-info {
@@ -209,6 +223,11 @@ progress {
     .fc-button {
         padding: 6px 10px;  /* さらに余白を小さく */
         font-size: 12px;    /* フォントサイズを小さく */
+    }
+    #autophagy-text {
+        font-size: 14px; /* フォントサイズを小さくする */
+        top: -30px; /* テキストの位置を調整 */
+        white-space: nowrap; /* 改行を防ぐ */
     }
 }
 
