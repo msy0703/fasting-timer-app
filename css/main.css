@@ -103,7 +103,7 @@ progress {
 /* プログレスバー */
 #timer-progress {
     width: 100%; /* プログレスバーの幅 */
-    height: 20px; /* プログレスバーの高さ */
+    height: 25px; /* プログレスバーの高さ */
     position: relative; /* 残り時間を重ねるためにrelativeを設定 */
     margin-bottom: 5px; /* 経過時間との間の余白 */
 }
