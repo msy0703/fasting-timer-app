@@ -1,5 +1,27 @@
 /* animations.css - アニメーションスタイル */
 
+/* タイトルアニメーション */
+@keyframes titleAnimation {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+/* ラインが光るアニメーション */
+@keyframes lineGlow {
+    0%, 100% {
+        opacity: 0.6;
+    }
+    50% {
+        opacity: 1;
+    }
+}
+
 /* 点滅アニメーション */
 @keyframes blink {
     0% {
@@ -24,4 +46,14 @@
     color: rgba(255, 69, 0, 0.8);
     z-index: 2;
     animation: blink 1s infinite; /* 1秒間隔で点滅 */
+}
+
+/* 進行中のアニメーション */
+@keyframes progressAnimation {
+    0% {
+        background-position: 0% 0%;
+    }
+    100% {
+        background-position: 100% 0%;
+    }
 }

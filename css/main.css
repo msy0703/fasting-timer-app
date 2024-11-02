@@ -4,11 +4,65 @@ body {
     background-color: #f9f6ef;
     margin: 0;
 }
-
-.fasting-header h2 {
-    font-size: 24px;
+/* タイトルのスタイル */
+/* タイトルのスタイル */
+.title {
+    font-family: 'Arial', sans-serif;
+    font-size: 3em;
+    font-weight: bold;
+    text-align: center;
     margin: 20px 0;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    background: linear-gradient(45deg, #ff6347, #ff4500, #ff6347);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    position: relative;
+    display: inline-block;
+    padding: 10px 20px;
+    text-shadow: 2px 4px 5px rgba(0, 0, 0, 0.3); /* 外側に立体感のある影 */
+    animation: gradientMove 4s infinite linear, titleScale 3s infinite ease-in-out;
 }
+
+/* グラデーションが動くアニメーション */
+@keyframes gradientMove {
+    0% {
+        background-position: 0% 50%;
+    }
+    100% {
+        background-position: 100% 50%;
+    }
+}
+
+/* タイトルのサイズがわずかに変わるアニメーション */
+@keyframes titleScale {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+/* タイトルの下に装飾ラインを追加 */
+.title::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: -10px;
+    transform: translateX(-50%);
+    width: 80%;
+    height: 4px;
+    background: linear-gradient(90deg, #ff4500, #ff6347);
+    border-radius: 2px;
+    animation: lineGlow 2s infinite ease-in-out;
+}
+
+.title {
+    animation: titleAnimation 3s infinite ease-in-out;
+}
+
 
 /* セレクトボックスのスタイル */
 .time-select {
@@ -85,15 +139,18 @@ progress::-webkit-progress-bar {
 
 /* Webkitでの進行した部分 */
 progress::-webkit-progress-value {
-    background: linear-gradient(to right, rgba(255, 165, 0, 0.8), rgba(255, 69, 0, 0.8)); /* 進行した部分の色 */
-    border-radius: 15px;
+    background: linear-gradient(to right, rgba(255, 165, 0, 0.8), rgba(255, 69, 0, 0.8));
+    background-size: 200% 100%;
+    animation: progressAnimation 3s linear infinite; /* 進行中アニメーションを追加 */
 }
 
 /* Firefox用 */
 progress::-moz-progress-bar {
-    background: linear-gradient(to right, rgba(255, 165, 0, 0.8), rgba(255, 69, 0, 0.8)); /* 進行した部分の色 */
-    border-radius: 15px;
+    background: linear-gradient(to right, rgba(255, 165, 0, 0.8), rgba(255, 69, 0, 0.8));
+    background-size: 200% 100%;
+    animation: progressAnimation 3s linear infinite;
 }
+
 
 /* 進行していない部分（グレー） */
 progress {
@@ -103,7 +160,7 @@ progress {
 /* プログレスバー */
 #timer-progress {
     width: 100%; /* プログレスバーの幅 */
-    height: 25px; /* プログレスバーの高さ */
+    height: 20px; /* プログレスバーの高さ */
     position: relative; /* 残り時間を重ねるためにrelativeを設定 */
     margin-bottom: 5px; /* 経過時間との間の余白 */
 }
@@ -140,6 +197,19 @@ progress {
     color: #555;     /* 経過時間の色をやや薄く */
     text-align: center; /* 中央揃え */
     margin-top: 5px; /* プログレスバーとの間に少し余白を追加 */
+}
+
+/* オートファジー中のテキストスタイル */
+#autophagy-text {
+    position: absolute;
+    top: -40px; /* プログレスバーの上に配置する距離を広げる */
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 18px;
+    font-weight: bold;
+    color: rgba(255, 69, 0, 0.8); /* 濃い赤色 */
+    z-index: 2; /* 他の要素よりも上に表示されるようにする */
+    animation: blink 1s infinite; /* 1秒間隔で無限に点滅 */
 }
 
 .time-info {
@@ -202,9 +272,6 @@ progress {
         font-size: 14px; /* フォントサイズを小さくする */
         top: -30px; /* テキストの位置を調整 */
         white-space: nowrap; /* 改行を防ぐ */
-    }
-    #calendar {
-        font-size: 12px;
     }
 }
 
