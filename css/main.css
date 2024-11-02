@@ -1,10 +1,11 @@
 body {
     font-family: 'Arial', sans-serif;
     text-align: center;
-    background-color: #f9f6ef;
+    color: #000000; /* 基本の文字色をホワイトに設定 */
+    background-color: #ffffff;
     margin: 0;
 }
-/* タイトルのスタイル */
+
 /* タイトルのスタイル */
 .title {
     font-family: 'Arial', sans-serif;
@@ -25,26 +26,6 @@ body {
     animation: gradientMove 4s infinite linear, titleScale 3s infinite ease-in-out;
 }
 
-/* グラデーションが動くアニメーション */
-@keyframes gradientMove {
-    0% {
-        background-position: 0% 50%;
-    }
-    100% {
-        background-position: 100% 50%;
-    }
-}
-
-/* タイトルのサイズがわずかに変わるアニメーション */
-@keyframes titleScale {
-    0%, 100% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.1);
-    }
-}
-
 /* タイトルの下に装飾ラインを追加 */
 .title::after {
     content: '';
@@ -52,7 +33,7 @@ body {
     left: 50%;
     bottom: -10px;
     transform: translateX(-50%);
-    width: 80%;
+    width: 90%;
     height: 4px;
     background: linear-gradient(90deg, #ff4500, #ff6347);
     border-radius: 2px;
@@ -60,7 +41,7 @@ body {
 }
 
 .title {
-    animation: titleAnimation 3s infinite ease-in-out;
+    animation: lineGlow 3s infinite ease-in-out;
 }
 
 

@@ -12,6 +12,27 @@
         transform: scale(1);
     }
 }
+
+/* グラデーションが動くアニメーション */
+@keyframes gradientMove {
+    0% {
+        background-position: 0% 50%;
+    }
+    100% {
+        background-position: 100% 50%;
+    }
+}
+
+/* タイトルのサイズがわずかに変わるアニメーション */
+@keyframes titleScale {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+}
+
 /* ラインが光るアニメーション */
 @keyframes lineGlow {
     0%, 100% {
