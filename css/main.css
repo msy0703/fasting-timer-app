@@ -254,6 +254,9 @@ progress {
         top: -30px; /* テキストの位置を調整 */
         white-space: nowrap; /* 改行を防ぐ */
     }
+    .title {
+        font-size: 2em;
+    }
 }
 
 /* ボタンのホバースタイル */
