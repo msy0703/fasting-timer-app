@@ -231,7 +231,7 @@ progress {
 /* デフォルト（大きな画面向け） */
 .fc-button {
     padding: 10px 15px;
-    font-size: 16px;
+    font-size: 20px;
     border-radius: 5px;
 }
 
@@ -245,17 +245,21 @@ progress {
 
 /* 画面幅が480px以下の場合（スマートフォンサイズ） */
 @media (max-width: 480px) {
-    .fc-button {
-        padding: 6px 10px;  /* さらに余白を小さく */
-        font-size: 12px;    /* フォントサイズを小さく */
+    /* メインタイトル */
+    .title {
+        font-size: 2em;
     }
-    #autophagy-text {
+    /* カレンダー上部 */
+    .fc-toolbar {
+        padding: 4px 6px;
+        font-size: 11px;    /* フォントサイズを小さく */
+    }
+
+    /*オートファジー中の文字 */
+    #autophagy-text { 
         font-size: 14px; /* フォントサイズを小さくする */
         top: -30px; /* テキストの位置を調整 */
         white-space: nowrap; /* 改行を防ぐ */
-    }
-    .title {
-        font-size: 2em;
     }
 }
 
